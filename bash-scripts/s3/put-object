@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+#where we'll store these files
+OUTPUT_DIR="/tmp"
+
+#Create output folder
+mkdir -p OUTPUT_DIR
+
+#Generate a random # to determine how many files to create
+NUM_FILES=$((RANDOM % 6 + 5))
+
+# Loop to create the random files
+for ((i = 1; i <= NUM_FILES; i++)); do
+    # Create a random filename
+    FILE_NAME="$OUTPUT_DIR/file_$RANDOM.txt"
+    # Create the file
+    touch "$FILE_NAME"
+done
+
+# Display the directory structure of OUTPUT_DIR
+tree "$OUTPUT_DIR"
+
+aws s3 sync $OUTPUT_DIR s3://$BUCKET_NAME/files
