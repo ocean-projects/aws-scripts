@@ -17,7 +17,15 @@ for ((i = 1; i <= NUM_FILES; i++)); do
     touch "$FILE_NAME"
 done
 
-# Display the directory structure of OUTPUT_DIR
-tree "$OUTPUT_DIR"
+# Ensure BUCKET_NAME is passed as an argument
+if [ -z "$1" ]; then
+    echo "Error: No bucket name provided. Usage: ./put-object.sh my-bucket-name"
+    exit 1
+fi
+
+BUCKET_NAME=$1  # Get the bucket name from the argument
+
+# Debug output to verify bucket name
+echo "Bucket Name: $BUCKET_NAME"
 
 aws s3 sync $OUTPUT_DIR s3://$BUCKET_NAME/files

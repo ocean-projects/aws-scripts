@@ -1,1 +1,28 @@
 #!/usr/bin/env bash
+
+# Function to ensure s3:// prefix is present
+ensure_s3_prefix() {
+    local path="$1"
+    if [[ "$path" != s3://* ]]; then
+        echo "s3://$path"
+    else
+        echo "$path"
+    fi
+}
+
+# Check if two arguments are provided
+if [ $# -ne 2 ]; then
+    echo "Usage: $0 <source> <destination>"
+    exit 1
+fi
+
+# Assign arguments to variables
+SOURCE=$(ensure_s3_prefix "$1")
+DESTINATION=$(ensure_s3_prefix "$2")
+
+# Perform S3 sync
+aws s3 sync "$SOURCE" "$DESTINATION"
+
+# Output success message
+echo "Sync complete from $SOURCE to $DESTINATION."
+

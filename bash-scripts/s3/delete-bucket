@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-echo "==list objects"
 
 #Check for bucket name
 if [ -z "$1" ]; then
@@ -9,5 +8,4 @@ fi
 
 BUCKET_NAME=$1
 
-aws s3api list-objects-v2 \
---bucket $BUCKET_NAME
+aws s3api delete-bucket --bucket $BUCKET_NAME
