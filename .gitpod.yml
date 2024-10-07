@@ -1,14 +1,15 @@
 # List the start up tasks.
 tasks:
   - name: utils
-    before:  |
-      sudp apt-get install tree
+    before: |
+      sudo apt-get update
+      sudo apt-get install -y tree
   - name: powershell
-    before:  |
+    before: |
       sudo apt-get update
       sudo apt-get install -y wget apt-transport-https software-properties-common
       wget -q "https://packages.microsoft.com/keys/microsoft.asc" -O- | sudo apt-key add -
-      sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/$(lsb_release -rs)/packages-microsoft-prod.deb)"
+      sudo apt-add-repository https://packages.microsoft.com/ubuntu/20.04/prod
       sudo apt-get update
       sudo apt-get install -y powershell
       pwsh -Command "Install-Module -Name AWS.Tools.Installer -Scope CurrentUser -Force"
@@ -23,4 +24,4 @@ tasks:
       unzip awscliv2.zip
       sudo ./aws/install
       cd $THEIA_WORKSPACE_ROOT
-
+      
