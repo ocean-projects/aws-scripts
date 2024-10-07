@@ -1,5 +1,17 @@
 # List the start up tasks.
 tasks:
+  - name: utils
+    before:  |
+      sudp apt-get install tree
+  - name: powershell
+    before:  |
+      sudo apt-get update
+      sudo apt-get install -y wget apt-transport-https software-properties-common
+      wget -q "https://packages.microsoft.com/keys/microsoft.asc" -O- | sudo apt-key add -
+      sudo add-apt-repository "$(wget -qO- https://packages.microsoft.com/config/$(lsb_release -rs)/packages-microsoft-prod.deb)"
+      sudo apt-get update
+      sudo apt-get install -y powershell
+
   - name: aws cli
     env:
       AWS_CLI_AUTO_PROMPT: on-partial
