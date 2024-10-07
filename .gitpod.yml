@@ -12,8 +12,6 @@ tasks:
       sudo apt-add-repository https://packages.microsoft.com/ubuntu/20.04/prod
       sudo apt-get update
       sudo apt-get install -y powershell
-      pwsh -Command "Install-Module -Name AWS.Tools.Installer -Scope CurrentUser -Force"
-      pwsh -Command "Install-AWSToolsModule -Name AWS.Tools.S3 -Scope CurrentUser -Force"
 
   - name: aws cli
     env:
