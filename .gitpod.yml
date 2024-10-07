@@ -1,5 +1,6 @@
 # List the start up tasks.
 # Install powershell https://learn.microsoft.com/en-us/powershell/scripting/install/install-ubuntu?view=powershell-7.4
+# AWS tools for powershell documentation https://docs.aws.amazon.com/powershell/latest/reference/
 # Install AWS CLI https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 
 tasks:
@@ -16,6 +17,10 @@ tasks:
       rm packages-microsoft-prod.deb
       sudo apt-get update
       sudo apt-get install -y powershell
+# Commands:
+# pwsh
+# Install-Module -Name AWS.Tools.Installer
+# Install-AWSToolsModule -Name AWS.Tools.S3
 
   - name: aws cli
     env:
