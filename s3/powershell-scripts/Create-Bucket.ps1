@@ -1,20 +1,25 @@
 Import-Module AWS.Tools.S3
 $region = "us-east-1"
 
-$bucketName = Read-Host -Prompt 'Enter the S3 bucket name'
-
 function BucketExists {
-    $bucket = Get-S3BUcket -BucketName $bucket -ErrorAction SilentlyContinue
-    return $null -ne $bucket 
+    param ($bucketName)
+    $bucket = Get-S3Bucket -BucketName $bucketName -ErrorAction SilentlyContinue
+    return $null -ne $bucket
 }
 
-if (-not (BucketExists)) {
-    Write-Host "Bucket doesn't exist"
-    New-S3Bucket -BucketName $bucketName -Region $region
-}
-else {
-    $bucketName = Read-Host -Prompt "Bucket exists. Choose another bucket name."
+$bucketExists = $false
+while (-not $bucketExists) {
+    $bucketName = Read-Host -Prompt 'Enter the S3 bucket name'
+
+    if (BucketExists $bucketName) {
+        Write-Host "Bucket '$bucketName' already exists. Please choose another name."
+    } else {
+        Write-Host "Bucket doesn't exist. Creating bucket '$bucketName'..."
+        New-S3Bucket -BucketName $bucketName -Region $region
+        $bucketExists = $true
+    }
 }
 
-Write-Host 'AWS Region: $region'
-Write-Host 'S3 Bucket: $bucketName'
+Write-Host "AWS Region: $region"
+Write-Host "S3 Bucket: $bucketName"
+

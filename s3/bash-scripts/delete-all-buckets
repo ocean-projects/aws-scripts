@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# List buckets
+BUCKETS=$(aws s3api list-buckets --query "Buckets[].Name" --output text)
+
+# Create variable for delete objects script
+DELETE_OBJECTS_SCRIPT="./s3/bash-scripts/delete-objects"
+
+# Create for loop
+for BUCKET in $BUCKETS; do
+    echo "Processing bucket $BUCKET"
+
+    if [ -f "$DELETE_OBJECTS_SCRIPT" ]; then
+        $DELETE_OBJECTS_SCRIPT $BUCKET
+        echo "All objects in '$BUCKET' deleted."
+    else
+        echo "Error: Delete objects script doesn't exist."
+        exit 1
+    fi
+
+    # Deleting the bucket itself
+    aws s3api delete-bucket --bucket "$BUCKET"
+    echo "'$BUCKET' deleted."
+done
+
+
+
+

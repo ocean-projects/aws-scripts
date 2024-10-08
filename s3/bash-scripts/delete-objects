@@ -9,13 +9,23 @@ fi
 BUCKET_NAME=$1
 
 # Check if there are objects in the bucket
+OBJECTS=$(aws s3api list-objects-v2 --bucket "$BUCKET_NAME" --query 'Contents[].Key' --output json)
 
+if [ "$OBJECTS" == "[]" ]; then
+    echo "No objects to delete in bucket '$BUCKET_NAME'."
+    exit 0
+fi
 
 # List objects in the bucket and create JSON for deletion
+echo "$OBJECTS" | jq -n '{Objects: [inputs | .[] | {Key: . }]}' > /tmp/delete_objects.json
 
-aws s3api list-objects-v2 \
---bucket "$BUCKET_NAME" \
---query Contents[].Key \
-| jq -n '{Objects: [inputs | .[] | {Key: . }]}' > /tmp/delete_objects.json
-
+# Delete objects using the JSON file
 aws s3api delete-objects --bucket "$BUCKET_NAME" --delete file:///tmp/delete_objects.json
+
+
+# aws s3api list-objects-v2 \
+# --bucket "$BUCKET_NAME" \
+# --query Contents[].Key \
+# | jq -n '{Objects: [inputs | .[] | {Key: . }]}' > /tmp/delete_objects.json
+
+# aws s3api delete-objects --bucket "$BUCKET_NAME" --delete file:///tmp/delete_objects.json
