@@ -7,6 +7,14 @@ tasks:
   - name: utils
     before: |
       sudo apt-get install tree
+  - name: install ruby
+    before: |
+      sudo apt-get update
+      sudo apt-get install -y ruby-full
+  - name: install java
+    before: |
+      sudo apt-get update
+      sudo apt-get install -y openjdk-11-jdk
   - name: powershell
     before: |
       sudo apt-get update
