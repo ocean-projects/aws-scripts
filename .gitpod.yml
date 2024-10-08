@@ -17,8 +17,8 @@ tasks:
       rm packages-microsoft-prod.deb
       sudo apt-get update
       sudo apt-get install -y powershell
-      Install-Module -Name AWS.Tools.Installer
-      Install-AWSToolsModule -Name AWS.Tools.S3
+      pwsh -Command "Install-Module -Name AWS.Tools.Installer"
+      pwsh -Command "Install-AWSToolsModule AWS.Tools.S3"
 
 #pwsh
 
