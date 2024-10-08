@@ -17,10 +17,10 @@ tasks:
       rm packages-microsoft-prod.deb
       sudo apt-get update
       sudo apt-get install -y powershell
-# Commands:
-# pwsh
-# Install-Module -Name AWS.Tools.Installer
-# Install-AWSToolsModule -Name AWS.Tools.S3
+      Install-Module -Name AWS.Tools.Installer
+      Install-AWSToolsModule -Name AWS.Tools.S3
+
+#pwsh
 
   - name: aws cli
     env:
