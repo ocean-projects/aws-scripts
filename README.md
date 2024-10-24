@@ -1,1 +1,1 @@
-A codebase of all the examples used throughout the AWS Certification Study Courses.
+A codebase of AWS scripts to increase efficiency.
